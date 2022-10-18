@@ -1,11 +1,8 @@
 import './App.css';
+import LoginButton from './components/Buttons/Login/LoginButton';
 
 export const App = () => {
-    return (
-        <div className='App'>
-            <h1> Hello, World </h1>
-        </div>
-    );
+    return <LoginButton />;
 };
 
 export default App;
