@@ -9,8 +9,16 @@
   },
   "author": "kim fransson",
   "license": "ISC",
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  }
   "devDependencies": {
     "css-loader": "6.7.1",
+    "husky": "8.0.1",
+    "prettier": "2.7.1",
+    "pretty-quick": "3.1.3",
     "style-loader": "3.3.1",
     "ts-loader": "9.4.1",
     "typescript": "4.8.4",
