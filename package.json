@@ -7,12 +7,17 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "dev": "webpack serve --hot",
         "prepare": "husky install",
-        "pretty-quick": "pretty-quick"
+        "pretty-quick": "pretty-quick",
+        "eslint": "eslint"
     },
     "author": "kim fransson",
     "license": "ISC",
     "devDependencies": {
+        "@typescript-eslint/eslint-plugin": "5.40.1",
+        "@typescript-eslint/parser": "5.40.1",
         "css-loader": "6.7.1",
+        "eslint": "8.25.0",
+        "eslint-plugin-react": "7.31.10",
         "husky": "8.0.1",
         "prettier": "2.7.1",
         "pretty-quick": "3.1.3",
