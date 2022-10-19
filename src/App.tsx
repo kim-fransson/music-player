@@ -1,8 +1,10 @@
 import './App.css';
-import LoginButton from './components/Buttons/Login/LoginButton';
+import { LoginPage, HomePage } from './components/Pages';
+
+const code = new URLSearchParams(window.location.search).get('code');
 
 export const App = () => {
-    return <LoginButton />;
+    return code ? <HomePage code={code} /> : <LoginPage />;
 };
 
 export default App;

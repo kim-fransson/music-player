@@ -3,3 +3,13 @@
     --spotify-black: #191414;
     --spotify-font: 'Montserrat', sans-serif;
 }
+
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.root {
+    width: 100vw;
+    height: 100vh;
+}
