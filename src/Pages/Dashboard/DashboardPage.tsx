@@ -1,5 +1,6 @@
 import { FunctionComponent } from 'react';
+import './DashboardPage.css';
 
 export const DashboardPage: FunctionComponent = () => {
-    return <div>Dashboard Page...</div>;
+    return <div className='dashboard'></div>;
 };

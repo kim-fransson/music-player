@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { FunctionComponent, ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { authClient } from '../../clients/auth-client';
@@ -17,48 +17,47 @@ interface RefreshTokenResponse {
 }
 
 interface AuthProviderProps {
-    code: string;
     children: ReactNode;
 }
 
 export const AuthProvider: FunctionComponent<AuthProviderProps> = ({
-    code,
     children,
 }) => {
+    const urlParams = new URLSearchParams(window.location.search);
+
+    console.log(
+        `AuthProvider: \n\t accessToken: ${urlParams.get(
+            'accessToken'
+        )} \n\t refreshToken: ${urlParams.get(
+            'refreshToken'
+        )} \n\t expiresIn: ${urlParams.get('expiresIn')}`
+    );
+
     const [accessToken, setAccessToken] =
         useLocalStorage<string>('accessToken');
     const [refreshToken, setRefreshToken] =
         useLocalStorage<string>('refreshToken');
     const [expiresIn, setExpiresIn] = useLocalStorage<number>('expiresIn');
-    const navigate = useNavigate();
 
     useEffect(() => {
-        if (!code) {
-            return;
+        const accessToken = urlParams.get('accessToken');
+        const refreshToken = urlParams.get('refreshToken');
+        const expiresIn = Number.parseInt(urlParams.get('expiresIn'));
+
+        if (accessToken) {
+            setAccessToken(accessToken);
         }
 
-        const authorize = async () => {
-            console.info('authorizing user');
-            try {
-                const response = await authClient.post<AuthorizeResponse>(
-                    '/authorize',
-                    { code }
-                );
+        if (refreshToken) {
+            setRefreshToken(refreshToken);
+        }
 
-                window.history.pushState({}, null, '/'); // removes code from url
+        if (expiresIn) {
+            setExpiresIn(expiresIn);
+        }
+    }, [urlParams]);
 
-                const { accessToken, refreshToken, expiresIn } = response.data;
-                setAccessToken(accessToken);
-                setRefreshToken(refreshToken);
-                setExpiresIn(expiresIn);
-            } catch (error) {
-                console.log(error.message);
-                navigate('/login');
-            }
-        };
-
-        authorize();
-    }, [code]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (!refreshToken || !expiresIn) {

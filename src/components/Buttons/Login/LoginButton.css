@@ -13,6 +13,7 @@
     justify-content: center;
     gap: 14px;
     cursor: pointer;
+    border: 4px solid var(--spotify-black);
 }
 
 .loginButton:hover {
