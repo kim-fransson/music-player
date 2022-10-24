@@ -35,6 +35,7 @@ module.exports = {
     },
     devServer: {
         static: path.join(__dirname, 'public/'),
+        historyApiFallback: true,
         devMiddleware: {
             publicPath: '/dist/',
         },
