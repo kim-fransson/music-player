@@ -1,0 +1,62 @@
+.profileCard {
+    font-family: var(--spotify-font);
+    background-color: var(--spotify-black);
+    display: flex;
+    gap: 10px;
+
+    max-width: 650px;
+    color: white;
+
+    padding: 40px 30px;
+    border-radius: 8px;
+}
+
+.profileCard__profileImage {
+    object-fit: contain;
+    align-self: flex-start;
+}
+
+.profileCard__topLists {
+    display: flex;
+    flex-direction: column;
+
+    gap: 20px;
+}
+
+.topLists__artists,
+.topLists__tracks {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.tracks__list,
+.artists__list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.artists__title,
+.tracks__title {
+    font-size: xx-large;
+    font-weight: 600;
+}
+
+.track,
+.artist {
+    white-space: pre-wrap;
+}
+
+@media (max-width: 568px) {
+    .profileCard {
+        flex-direction: column;
+    }
+
+    .profileCard__profileImage {
+        align-self: center;
+    }
+}
