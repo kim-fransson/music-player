@@ -1,20 +1,14 @@
 import { FunctionComponent } from 'react';
 import './LoginButton.css';
 import SpotifyIcon from '../../Icons/SpotifyIcon';
-import { authClient } from '../../../clients/auth-client';
 
-interface LoginResponse {
-    authUrl: string;
+interface LoginButtonProps {
+    onClick: () => void;
 }
 
-const LoginButton: FunctionComponent = () => {
-    const redirectToSpotifyLoginPage = async () => {
-        const res = await authClient.get<LoginResponse>('/login');
-        window.location.href = res.data.authUrl;
-    };
-
+const LoginButton: FunctionComponent<LoginButtonProps> = ({ onClick }) => {
     return (
-        <div onClick={redirectToSpotifyLoginPage} className='loginButton'>
+        <div onClick={onClick} className='loginButton'>
             <SpotifyIcon />
             <p>Log in with Spotify</p>
         </div>
