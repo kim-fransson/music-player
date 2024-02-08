@@ -8,16 +8,41 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     fontSize: {
-      "heading-xl": [
-        "96px",
+      "header-1": [
+        "56px",
         {
-          fontWeight: "800",
-          letterSpacing: "0.05em",
+          fontWeight: "600",
         },
       ],
+      "header-2": [
+        "24px",
+        {
+          fontWeight: "500",
+        },
+      ],
+      subtext: [
+        "14px",
+        {
+          fontWeight: "500",
+        },
+      ],
+      body: ["16px"],
     },
+
     extend: {
-      colors: {},
+      colors: {
+        black: {
+          100: "#000000",
+          64: "#191919",
+          32: "#2f2f2f",
+        },
+        green: {
+          100: "#43a047",
+          16: "#545c55",
+        },
+        gray: "#939393",
+        "light-gray": "#bebebe",
+      },
       opacity: {},
       boxShadow: {},
       gridTemplateAreas: {},

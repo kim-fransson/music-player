@@ -20,6 +20,7 @@
     "**/*": "prettier --write --ignore-unknown"
   },
   "dependencies": {
+    "@fontsource-variable/inter": "^5.0.16",
     "@uidotdev/usehooks": "2.4.1",
     "framer-motion": "11.0.3",
     "luxon": "3.4.4",

@@ -1,11 +1,17 @@
+@import "@fontsource-variable/inter";
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
+  font-family: "Inter Variable", sans-serif;
+  color: white;
+  height: 100dvh;
+  background: radial-gradient(
+      circle,
+      rgba(84, 92, 85, 1) 0%,
+      rgba(25, 25, 25, 1) 80%
+    )
+    no-repeat;
 }
-
-
-
-
