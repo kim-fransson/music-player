@@ -2,13 +2,14 @@ import { useState } from "react";
 import { songs } from "./data/songs";
 import PlayIcon from "@assets/icons/play-icon.svg?react";
 import PauseIcon from "@assets/icons/pause-icon.svg?react";
+import ReplayIcon from "@assets/icons/replay-icon.svg?react";
 
 import { useSound } from "./hooks";
 
 export default function App() {
   const [activeSongIndex] = useState(0);
   const [activeSong] = useState(songs[activeSongIndex]);
-  const { toggle, isPlaying } = useSound(activeSong.src);
+  const { toggle, replay, isPlaying } = useSound(activeSong.src);
 
   return (
     <div className="grid absolute-center max-w-3xl w-full rounded-2xl overflow-hidden shadow-2xl">
@@ -40,7 +41,16 @@ export default function App() {
           </a>
         </div>
 
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center gap-4">
+          <div className="tooltip" data-tip="Replay">
+            <button
+              onClick={replay}
+              className="btn btn-sm btn-neutral btn-circle"
+            >
+              <ReplayIcon className="h-5 w-5" />
+            </button>
+          </div>
+
           <div className="tooltip" data-tip={isPlaying ? "Pause" : "Play"}>
             <button onClick={toggle} className="btn btn-neutral btn-circle">
               {isPlaying ? <PauseIcon /> : <PlayIcon />}

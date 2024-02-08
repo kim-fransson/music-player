@@ -9,8 +9,13 @@ export const useSound = (soundUrl: string) => {
     setIsPlaying((curr) => !curr);
   }, [audio, isPlaying]);
 
+  const replay = useCallback(() => {
+    audio.currentTime = 0;
+  }, [audio]);
+
   return {
     toggle,
     isPlaying,
+    replay,
   };
 };
