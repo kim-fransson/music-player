@@ -1,9 +1,15 @@
 import { useState } from "react";
 import { songs } from "./data/songs";
+import PlayIcon from "@assets/icons/play-icon.svg?react";
+import PauseIcon from "@assets/icons/pause-icon.svg?react";
+
+import { useSound } from "./hooks";
 
 export default function App() {
   const [activeSongIndex] = useState(0);
   const [activeSong] = useState(songs[activeSongIndex]);
+  const { toggle, isPlaying } = useSound(activeSong.src);
+
   return (
     <div className="grid absolute-center max-w-3xl w-full rounded-2xl overflow-hidden shadow-2xl">
       <div className="h-60 overflow-hidden">
@@ -21,14 +27,26 @@ export default function App() {
             alt={activeSong.imgAlt}
           />
         </div>
+
         <h2 className="text-header-1 text-center">{activeSong.name}</h2>
-        <a
-          className="text-header-2 text-white/60 text-center transition-colors hover:text-green-100"
-          href={activeSong.artist.website}
-          target="_blank"
-        >
-          {activeSong.artist.name}
-        </a>
+
+        <div className="text-center mb-12">
+          <a
+            className="text-header-2 text-white/60 transition-colors hover:text-green-100"
+            href={activeSong.artist.website}
+            target="_blank"
+          >
+            {activeSong.artist.name}
+          </a>
+        </div>
+
+        <div className="flex items-center justify-center">
+          <div className="tooltip" data-tip={isPlaying ? "Pause" : "Play"}>
+            <button onClick={toggle} className="btn btn-neutral btn-circle">
+              {isPlaying ? <PauseIcon /> : <PlayIcon />}
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
