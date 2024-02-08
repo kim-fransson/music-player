@@ -3,13 +3,16 @@ import { songs } from "./data/songs";
 import PlayIcon from "@assets/icons/play-icon.svg?react";
 import PauseIcon from "@assets/icons/pause-icon.svg?react";
 import ReplayIcon from "@assets/icons/replay-icon.svg?react";
+import RepeatIcon from "@assets/icons/repeat-icon.svg?react";
 
 import { useSound } from "./hooks";
 
 export default function App() {
   const [activeSongIndex] = useState(0);
   const [activeSong] = useState(songs[activeSongIndex]);
-  const { toggle, replay, isPlaying } = useSound(activeSong.src);
+  const { toggleSound, replay, toggleLoop, isPlaying, isLooping } = useSound(
+    activeSong.src,
+  );
 
   return (
     <div className="grid absolute-center max-w-3xl w-full rounded-2xl overflow-hidden shadow-2xl">
@@ -33,7 +36,7 @@ export default function App() {
 
         <div className="text-center mb-12">
           <a
-            className="text-header-2 text-white/60 transition-colors hover:text-green-100"
+            className="text-header-2 text-white/60 link link-primary link-hover outline-none"
             href={activeSong.artist.website}
             target="_blank"
           >
@@ -41,19 +44,29 @@ export default function App() {
           </a>
         </div>
 
-        <div className="flex items-center justify-center gap-4">
+        <div className="flex items-center justify-center gap-4 text-light-gray">
           <div className="tooltip" data-tip="Replay">
-            <button
-              onClick={replay}
-              className="btn btn-sm btn-neutral btn-circle"
-            >
-              <ReplayIcon className="h-5 w-5" />
+            <button onClick={replay} className="btn btn-ghost btn-circle">
+              <ReplayIcon className="" />
             </button>
           </div>
 
           <div className="tooltip" data-tip={isPlaying ? "Pause" : "Play"}>
-            <button onClick={toggle} className="btn btn-neutral btn-circle">
-              {isPlaying ? <PauseIcon /> : <PlayIcon />}
+            <button
+              onClick={toggleSound}
+              className="btn btn-primary btn-circle btn-lg"
+            >
+              {isPlaying ? (
+                <PauseIcon className="w-8 h-8" />
+              ) : (
+                <PlayIcon className="w-8 h-8" />
+              )}
+            </button>
+          </div>
+
+          <div className="tooltip" data-tip="Repeat">
+            <button onClick={toggleLoop} className="btn btn-ghost btn-circle">
+              <RepeatIcon className={`${isLooping ? "text-green-100" : ""}`} />
             </button>
           </div>
         </div>
