@@ -1,5 +1,4 @@
 import { formatDuration } from "@/utils";
-import { motion } from "framer-motion";
 import { Label, Slider, SliderThumb, SliderTrack } from "react-aria-components";
 
 export type ProgressProps = {
@@ -13,7 +12,7 @@ export const Progress = ({ progress, duration, onChange }: ProgressProps) => {
       maxValue={Math.floor(duration)}
       value={Math.floor(progress)}
       onChange={onChange}
-      className="mt-4 px-8 text-subtext text-white/60 relative items-center justify-center flex"
+      className="mt-4 px-8 text-subtext text-white/60 relative items-center justify-center flex w-full"
     >
       <span className="absolute left-0 top-1/2 -translate-y-1/2">
         {formatDuration(progress)}
@@ -28,8 +27,8 @@ export const Progress = ({ progress, duration, onChange }: ProgressProps) => {
               className="h-5 w-5 top-[50%] rounded-full bg-white outline-none transition peer z-50
             focus-visible:opacity-100 opacity-0 dragging:opacity-100 group-hover:opacity-100"
             />
-            <motion.div
-              animate={{ width: state.getThumbPercent(0) * 100 + "%" }}
+            <div
+              style={{ width: state.getThumbPercent(0) * 100 + "%" }}
               className="absolute h-2 top-[50%] translate-y-[-50%] rounded-full bg-white 
               peer-focus-visible:bg-green-100 peer-dragging:bg-green-100 group-hover:bg-green-100
               transition"

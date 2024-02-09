@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { Slider, SliderThumb, SliderTrack } from "react-aria-components";
 
 export type VolumeProps = {
@@ -24,8 +23,8 @@ export const Volume = ({ volume, onChange }: VolumeProps) => {
               className="h-4 w-4 top-[50%] rounded-full bg-white outline-none transition peer z-50
             focus-visible:opacity-100 opacity-0 dragging:opacity-100 group-hover:opacity-100"
             />
-            <motion.div
-              animate={{ width: state.getThumbPercent(0) * 100 + "%" }}
+            <div
+              style={{ width: state.getThumbPercent(0) * 100 + "%" }}
               className="absolute h-2 top-[50%] translate-y-[-50%] rounded-full bg-white 
               peer-focus-visible:bg-green-100 peer-dragging:bg-green-100 group-hover:bg-green-100
               transition"

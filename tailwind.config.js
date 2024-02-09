@@ -14,8 +14,20 @@ export default {
           fontWeight: "600",
         },
       ],
+      "header-1-mobile": [
+        "36px",
+        {
+          fontWeight: "600",
+        },
+      ],
       "header-2": [
         "24px",
+        {
+          fontWeight: "500",
+        },
+      ],
+      "header-2-mobile": [
+        "16px",
         {
           fontWeight: "500",
         },

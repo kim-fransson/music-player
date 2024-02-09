@@ -12,6 +12,7 @@ import SoundOffIcon from "@assets/icons/sound-off-icon.svg?react";
 
 import { useSound } from "./hooks";
 import { Progress, Volume } from "./components";
+import { usePrevious } from "@uidotdev/usehooks";
 
 export default function App() {
   const [activeSongIndex, setActiveSongIndex] = useState(0);
@@ -27,11 +28,11 @@ export default function App() {
     updateCurrentTime,
     updateSound,
     isEnded,
-    toggleMute,
-    isMuted,
     volume,
     updateVolume,
   } = useSound(activeSong.src);
+
+  const previousVolume = usePrevious(volume);
 
   useEffect(() => {
     const newSong = songs[activeSongIndex];
@@ -47,6 +48,15 @@ export default function App() {
     setActiveSongIndex((curr) => (curr - 1 + songs.length) % songs.length);
   };
 
+  const toggleMute = () => {
+    if (volume === 0) {
+      console.log(previousVolume);
+      updateVolume(previousVolume < 3 ? 100 : previousVolume);
+    } else {
+      updateVolume(0);
+    }
+  };
+
   useEffect(() => {
     if (!isLooping && isEnded) {
       nextSong();
@@ -54,31 +64,34 @@ export default function App() {
   }, [isEnded, isLooping]);
 
   return (
-    <div className="grid absolute-center max-w-5xl w-full rounded-2xl overflow-hidden shadow-2xl bg-black-64">
+    <div
+      className="max-w-5xl h-dvh w-full bg-black-64 flex flex-col
+    lg:h-4/5 lg:rounded-2xl lg:absolute-center lg:overflow-hidden lg:shadow-2xl"
+    >
       <div
-        className="h-60 bg-cover blur-sm bg-center bg-no-repeat"
+        className="h-1/4 bg-cover blur-sm bg-center bg-no-repeat"
         style={{ backgroundImage: `url("${activeSong.img}")` }}
       />
-      <div className="bg-black-64 relative grid pt-36 pb-12 px-8">
+      <div className="bg-black-64 relative flex-1 flex flex-col items-center lg:px-12 md:px-8 px-4 pb-8">
         <div
-          className="h-64 w-64 rounded-full border-white border-4 overflow-hidden absolute left-1/2 -translate-x-1/2 z-50 -translate-y-1/2
+          className="h-64 w-64 rounded-full border-white border-4 absolute left-1/2 -translate-x-1/2 top-0 -translate-y-1/2
         bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url("${activeSong.img}")` }}
         />
 
-        <h2 className="text-header-1 text-center">{activeSong.name}</h2>
+        <h2 className="lg:text-header-1 text-header-1-mobile text-center mt-36">
+          {activeSong.name}
+        </h2>
 
-        <div className="text-center mb-12">
-          <a
-            className="text-header-2 text-white/60 link link-primary link-hover outline-none"
-            href={activeSong.artist.website}
-            target="_blank"
-          >
-            {activeSong.artist.name}
-          </a>
-        </div>
+        <a
+          className="lg:text-header-2 text-header-2-mobile text-white/60 link link-primary link-hover outline-none"
+          href={activeSong.artist.website}
+          target="_blank"
+        >
+          {activeSong.artist.name}
+        </a>
 
-        <div className="flex items-center justify-center gap-4 text-light-gray relative">
+        <div className="flex items-center justify-center relative md:gap-4 gap-2 text-light-gray mt-auto w-full">
           <div className="tooltip" data-tip="Replay">
             <button onClick={replay} className="btn btn-ghost btn-circle">
               <ReplayIcon className="" />
@@ -116,10 +129,13 @@ export default function App() {
             </button>
           </div>
 
-          <div className="right-0 absolute flex gap-2 items-center justify-center">
-            <div className="tooltip" data-tip={isMuted ? "Unmute" : "Mute"}>
+          <div className="md:flex absolute right-0 gap-2 items-center justify-center hidden">
+            <div
+              className="tooltip"
+              data-tip={volume === 0 ? "Unmute" : "Mute"}
+            >
               <button onClick={toggleMute} className="btn btn-ghost btn-circle">
-                {isMuted ? <SoundOffIcon /> : <SoundOnIcon />}
+                {volume === 0 ? <SoundOffIcon /> : <SoundOnIcon />}
               </button>
             </div>
             <Volume volume={volume} onChange={updateVolume} />
