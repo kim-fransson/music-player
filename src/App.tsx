@@ -7,12 +7,12 @@ import ReplayIcon from "@assets/icons/replay-icon.svg?react";
 import RepeatIcon from "@assets/icons/repeat-icon.svg?react";
 import NextIcon from "@assets/icons/next-icon.svg?react";
 import PreviousIcon from "@assets/icons/previous-icon.svg?react";
+import SoundOnIcon from "@assets/icons/sound-on-icon.svg?react";
+import SoundOffIcon from "@assets/icons/sound-off-icon.svg?react";
 
 import { useSound } from "./hooks";
 import { Progress } from "./components";
 
-// todo: Throttle the currentTime? every second
-// todo: next song when song ended
 export default function App() {
   const [activeSongIndex, setActiveSongIndex] = useState(0);
   const [activeSong, setActiveSong] = useState(songs[activeSongIndex]);
@@ -27,6 +27,8 @@ export default function App() {
     updateCurrentTime,
     updateSound,
     isEnded,
+    toggleMute,
+    isMuted,
   } = useSound(activeSong.src);
 
   useEffect(() => {
@@ -114,6 +116,15 @@ export default function App() {
           <div className="tooltip" data-tip="Repeat">
             <button onClick={toggleLoop} className="btn btn-ghost btn-circle">
               <RepeatIcon className={`${isLooping ? "text-green-100" : ""}`} />
+            </button>
+          </div>
+
+          <div
+            className="tooltip ml-auto"
+            data-tip={isMuted ? "Unmute" : "Mute"}
+          >
+            <button onClick={toggleMute} className="btn btn-ghost btn-circle">
+              {isMuted ? <SoundOffIcon /> : <SoundOnIcon />}
             </button>
           </div>
         </div>

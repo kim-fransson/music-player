@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 export const useSound = (soundUrl: string) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLooping, setIsLooping] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
   const [isEnded, setIsEnded] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
@@ -35,6 +36,11 @@ export const useSound = (soundUrl: string) => {
       audio.removeEventListener("playing", onPlaying);
     };
   }, [soundUrl]);
+
+  const toggleMute = useCallback(() => {
+    audioRef.current.volume = isMuted ? 1 : 0;
+    setIsMuted((curr) => !curr);
+  }, [isMuted]);
 
   const toggleSound = useCallback(() => {
     setIsPlaying((curr) => !curr);
@@ -80,5 +86,7 @@ export const useSound = (soundUrl: string) => {
     currentTime,
     updateSound,
     isEnded,
+    isMuted,
+    toggleMute,
   };
 };
