@@ -6,6 +6,7 @@ export const useSound = (soundUrl: string) => {
   const [isMuted, setIsMuted] = useState(false);
   const [isEnded, setIsEnded] = useState(false);
   const [duration, setDuration] = useState(0);
+  const [volume, setVolume] = useState(100);
   const [currentTime, setCurrentTime] = useState(0);
 
   const audioRef = useRef<HTMLAudioElement>(new Audio(soundUrl));
@@ -75,6 +76,11 @@ export const useSound = (soundUrl: string) => {
     setCurrentTime(position);
   }, []);
 
+  const updateVolume = useCallback((volume: number) => {
+    audioRef.current.volume = volume / 100;
+    setVolume(volume);
+  }, []);
+
   return {
     toggleSound,
     toggleLoop,
@@ -88,5 +94,7 @@ export const useSound = (soundUrl: string) => {
     isEnded,
     isMuted,
     toggleMute,
+    volume,
+    updateVolume,
   };
 };

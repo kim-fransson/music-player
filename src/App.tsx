@@ -11,7 +11,7 @@ import SoundOnIcon from "@assets/icons/sound-on-icon.svg?react";
 import SoundOffIcon from "@assets/icons/sound-off-icon.svg?react";
 
 import { useSound } from "./hooks";
-import { Progress } from "./components";
+import { Progress, Volume } from "./components";
 
 export default function App() {
   const [activeSongIndex, setActiveSongIndex] = useState(0);
@@ -29,6 +29,8 @@ export default function App() {
     isEnded,
     toggleMute,
     isMuted,
+    volume,
+    updateVolume,
   } = useSound(activeSong.src);
 
   useEffect(() => {
@@ -52,22 +54,17 @@ export default function App() {
   }, [isEnded, isLooping]);
 
   return (
-    <div className="grid absolute-center max-w-3xl w-full rounded-2xl overflow-hidden shadow-2xl">
-      <div className="h-60 overflow-hidden">
-        <img
-          className="blur-sm"
-          src={activeSong.img}
-          alt={`${activeSong.imgAlt} blurred`}
-        />
-      </div>
+    <div className="grid absolute-center max-w-5xl w-full rounded-2xl overflow-hidden shadow-2xl bg-black-64">
+      <div
+        className="h-60 bg-cover blur-sm bg-center bg-no-repeat"
+        style={{ backgroundImage: `url("${activeSong.img}")` }}
+      />
       <div className="bg-black-64 relative grid pt-36 pb-12 px-8">
-        <div className="h-64 w-64 rounded-full border-white border-4 overflow-hidden absolute left-1/2 -translate-x-1/2 z-50 -translate-y-1/2">
-          <img
-            src={activeSong.img}
-            className="max-w-full h-full"
-            alt={activeSong.imgAlt}
-          />
-        </div>
+        <div
+          className="h-64 w-64 rounded-full border-white border-4 overflow-hidden absolute left-1/2 -translate-x-1/2 z-50 -translate-y-1/2
+        bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url("${activeSong.img}")` }}
+        />
 
         <h2 className="text-header-1 text-center">{activeSong.name}</h2>
 
@@ -81,7 +78,7 @@ export default function App() {
           </a>
         </div>
 
-        <div className="flex items-center justify-center gap-4 text-light-gray">
+        <div className="flex items-center justify-center gap-4 text-light-gray relative">
           <div className="tooltip" data-tip="Replay">
             <button onClick={replay} className="btn btn-ghost btn-circle">
               <ReplayIcon className="" />
@@ -119,13 +116,13 @@ export default function App() {
             </button>
           </div>
 
-          <div
-            className="tooltip ml-auto"
-            data-tip={isMuted ? "Unmute" : "Mute"}
-          >
-            <button onClick={toggleMute} className="btn btn-ghost btn-circle">
-              {isMuted ? <SoundOffIcon /> : <SoundOnIcon />}
-            </button>
+          <div className="right-0 absolute flex gap-2 items-center justify-center">
+            <div className="tooltip" data-tip={isMuted ? "Unmute" : "Mute"}>
+              <button onClick={toggleMute} className="btn btn-ghost btn-circle">
+                {isMuted ? <SoundOffIcon /> : <SoundOnIcon />}
+              </button>
+            </div>
+            <Volume volume={volume} onChange={updateVolume} />
           </div>
         </div>
 
