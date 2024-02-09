@@ -29,4 +29,24 @@ export const songs = [
       website: "https://pixabay.com/users/olexy-25300778/",
     },
   },
+  {
+    name: "Better Day",
+    src: "/sounds/better-day.mp3",
+    img: "/images/better-day.jpg",
+    imgAlt: "penguin",
+    artist: {
+      name: "Penguin Music",
+      website: "https://pixabay.com/users/penguinmusic-24940186/",
+    },
+  },
+  {
+    name: "Once In Paris",
+    src: "/sounds/once-in-paris.mp3",
+    img: "/images/once-in-paris.jpg",
+    imgAlt: "paris",
+    artist: {
+      name: "Pumpupthemind",
+      website: "https://pixabay.com/users/pumpupthemind-19969411/",
+    },
+  },
 ] as Song[];
