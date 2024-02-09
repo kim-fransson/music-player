@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 export const useSound = (soundUrl: string) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLooping, setIsLooping] = useState(false);
+  const [isEnded, setIsEnded] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
 
@@ -14,26 +15,29 @@ export const useSound = (soundUrl: string) => {
     // Event handlers
     const onLoadedMetadata = () => setDuration(audio.duration);
     const onTimeUpdate = () => setCurrentTime(audio.currentTime);
-    const onEnded = () => setIsPlaying(false);
-    const onPlaying = () => setIsPlaying(true);
-    const onPause = () => setIsPlaying(false);
+    const onEnded = () => {
+      setIsEnded(true);
+    };
+    const onPlaying = () => {
+      setIsPlaying(true);
+      setIsEnded(false);
+    };
 
     audio.addEventListener("loadedmetadata", onLoadedMetadata);
     audio.addEventListener("timeupdate", onTimeUpdate);
     audio.addEventListener("ended", onEnded);
     audio.addEventListener("playing", onPlaying);
-    audio.addEventListener("pause", onPause);
 
     return () => {
       audio.removeEventListener("loadedmetadata", onLoadedMetadata);
       audio.removeEventListener("timeupdate", onTimeUpdate);
       audio.removeEventListener("ended", onEnded);
       audio.removeEventListener("playing", onPlaying);
-      audio.removeEventListener("pause", onPause);
     };
   }, [soundUrl]);
 
   const toggleSound = useCallback(() => {
+    setIsPlaying((curr) => !curr);
     isPlaying ? audioRef.current.pause() : audioRef.current.play();
   }, [isPlaying]);
 
@@ -45,6 +49,20 @@ export const useSound = (soundUrl: string) => {
   const replay = useCallback(() => {
     audioRef.current.currentTime = 0;
   }, []);
+
+  const updateSound = useCallback(
+    (soundUrl: string) => {
+      audioRef.current.src = soundUrl;
+      if (isPlaying) {
+        audioRef.current.play();
+      }
+
+      if (isLooping) {
+        audioRef.current.loop = true;
+      }
+    },
+    [isPlaying, isLooping],
+  );
 
   const updateCurrentTime = useCallback((position: number) => {
     audioRef.current.currentTime = position;
@@ -60,5 +78,7 @@ export const useSound = (soundUrl: string) => {
     duration,
     updateCurrentTime,
     currentTime,
+    updateSound,
+    isEnded,
   };
 };

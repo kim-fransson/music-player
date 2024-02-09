@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { songs } from "./data/songs";
 import PlayIcon from "@assets/icons/play-icon.svg?react";
@@ -5,11 +6,13 @@ import PauseIcon from "@assets/icons/pause-icon.svg?react";
 import ReplayIcon from "@assets/icons/replay-icon.svg?react";
 import RepeatIcon from "@assets/icons/repeat-icon.svg?react";
 import NextIcon from "@assets/icons/next-icon.svg?react";
+import PreviousIcon from "@assets/icons/previous-icon.svg?react";
 
 import { useSound } from "./hooks";
 import { Progress } from "./components";
-import { motion } from "framer-motion";
 
+// todo: Throttle the currentTime? every second
+// todo: next song when song ended
 export default function App() {
   const [activeSongIndex, setActiveSongIndex] = useState(0);
   const [activeSong, setActiveSong] = useState(songs[activeSongIndex]);
@@ -22,18 +25,29 @@ export default function App() {
     duration,
     currentTime,
     updateCurrentTime,
+    updateSound,
+    isEnded,
   } = useSound(activeSong.src);
 
   useEffect(() => {
-    console.log({
-      activeSongIndex,
-    });
-    setActiveSong(songs[activeSongIndex]);
+    const newSong = songs[activeSongIndex];
+    setActiveSong(newSong);
+    updateSound(newSong.src);
   }, [activeSongIndex]);
 
   const nextSong = () => {
     setActiveSongIndex((curr) => (curr + 1) % songs.length);
   };
+
+  const previousSong = () => {
+    setActiveSongIndex((curr) => (curr - 1 + songs.length) % songs.length);
+  };
+
+  useEffect(() => {
+    if (!isLooping && isEnded) {
+      nextSong();
+    }
+  }, [isEnded, isLooping]);
 
   return (
     <div className="grid absolute-center max-w-3xl w-full rounded-2xl overflow-hidden shadow-2xl">
@@ -46,7 +60,7 @@ export default function App() {
       </div>
       <div className="bg-black-64 relative grid pt-36 pb-12 px-8">
         <div className="h-64 w-64 rounded-full border-white border-4 overflow-hidden absolute left-1/2 -translate-x-1/2 z-50 -translate-y-1/2">
-          <motion.img
+          <img
             src={activeSong.img}
             className="max-w-full h-full"
             alt={activeSong.imgAlt}
@@ -69,6 +83,12 @@ export default function App() {
           <div className="tooltip" data-tip="Replay">
             <button onClick={replay} className="btn btn-ghost btn-circle">
               <ReplayIcon className="" />
+            </button>
+          </div>
+
+          <div className="tooltip" data-tip="Previous">
+            <button onClick={previousSong} className="btn btn-ghost btn-circle">
+              <PreviousIcon />
             </button>
           </div>
 
