@@ -12,7 +12,7 @@ import SoundOffIcon from "@assets/icons/sound-off-icon.svg?react";
 
 import { useSound } from "./hooks";
 import { Progress, Volume } from "./components";
-import { usePrevious } from "@uidotdev/usehooks";
+import { useDocumentTitle, usePrevious } from "@uidotdev/usehooks";
 
 export default function App() {
   const [activeSongIndex, setActiveSongIndex] = useState(0);
@@ -33,6 +33,11 @@ export default function App() {
   } = useSound(activeSong.src);
 
   const previousVolume = usePrevious(volume);
+  useDocumentTitle(
+    isPlaying
+      ? `Playing: ${activeSong.name} by ${activeSong.artist.name}`
+      : "Music Player",
+  );
 
   useEffect(() => {
     const newSong = songs[activeSongIndex];
