@@ -2,7 +2,7 @@ export const songs = [
   {
     name: "Forest Lullaby",
     src: "/sounds/forest-lullaby.mp3",
-    img: "/images/forest-lullaby.jpg",
+    img: "/images/forest-lullaby.png",
     imgAlt: "sunrise in the forest",
     artist: {
       name: "Lesfm",
@@ -12,7 +12,7 @@ export const songs = [
   {
     name: "Electronic Rock",
     src: "/sounds/electronic-rock.mp3",
-    img: "/images/electronic-rock.jpg",
+    img: "/images/electronic-rock.png",
     imgAlt: "a man playing a guitar",
     artist: {
       name: "Alex Grohl",
@@ -22,7 +22,7 @@ export const songs = [
   {
     name: "Summer Walk",
     src: "/sounds/summer-walk.mp3",
-    img: "/images/summer-walk.jpg",
+    img: "/images/summer-walk.png",
     imgAlt: "sunglasses on the beach",
     artist: {
       name: "Olexy",
@@ -32,7 +32,7 @@ export const songs = [
   {
     name: "Better Day",
     src: "/sounds/better-day.mp3",
-    img: "/images/better-day.jpg",
+    img: "/images/better-day.png",
     imgAlt: "penguin",
     artist: {
       name: "Penguin Music",
@@ -42,7 +42,7 @@ export const songs = [
   {
     name: "Once In Paris",
     src: "/sounds/once-in-paris.mp3",
-    img: "/images/once-in-paris.jpg",
+    img: "/images/once-in-paris.png",
     imgAlt: "paris",
     artist: {
       name: "Pumpupthemind",
